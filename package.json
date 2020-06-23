@@ -1,0 +1,24 @@
+{
+  "name": "jquery-connect",
+  "version": "1.0.0",
+  "description": "Easily connect your jQuery code to stores like Redux",
+  "main": "./dist/jquery-connect.min.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adrien-gueret/jquery-connect.git"
+  },
+  "keywords": [
+    "jquery",
+    "redux"
+  ],
+  "author": "Adrien Guéret",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adrien-gueret/jquery-connect/issues"
+  },
+  "homepage": "https://github.com/adrien-gueret/jquery-connect#readme",
+  "peerDependencies": {
+    "jquery": "^1.7.0"
+  },
+  "sideEffects": true
+}
