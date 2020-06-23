@@ -4,7 +4,7 @@
   "description": "Easily connect your jQuery code to stores like Redux",
   "main": "./dist/jquery-connect.min.js",
   "scripts": {
-    "build": "parcel build ./src/index.js --out-file jquery-connect.min.js"
+    "build": "parcel build ./src/index.js --no-source-maps --out-file jquery-connect.min.js"
   },
   "repository": {
     "type": "git",
