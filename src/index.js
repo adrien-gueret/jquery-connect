@@ -1,10 +1,8 @@
-import $ from 'jquery';
-
 import getInitAction from './actions/init';
 import getRerenderAction from './actions/rerender';
 import getSideEffectAction from './actions/sideEffect';
 
-$.fn.connect = function(arg1, arg2, arg3) {
+window.jQuery.fn.connect = function(arg1, arg2, arg3) {
     let callbackToApply;
 
     if (typeof arg1 === 'function') {

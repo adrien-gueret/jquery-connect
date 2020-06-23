@@ -1,8 +1,8 @@
-import $ from 'jquery';
-
 import shallowEqual from '../utils/shallowEqual';
 
 export default function getSideEffectAction(sideEffectCallback, dependencies) {
+    const $ = window.jQuery;
+    
     return function() {
         const $element = $(this);
         const sideEffectsCounter = $element.data('jConnect_sideEffectsCounter');

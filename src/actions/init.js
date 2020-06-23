@@ -1,5 +1,3 @@
-import $ from 'jquery';
-
 import shallowEqual from '../utils/shallowEqual';
 
 export default function getInitAction(renderFunction, mapStateToProps = null, store = null) {
@@ -10,6 +8,8 @@ export default function getInitAction(renderFunction, mapStateToProps = null, st
     if (!store) {
         throw new Error('$.fn.connect: no store provided');
     }
+
+    const $ = window.jQuery;
 
     return function () {
         const that = this;
