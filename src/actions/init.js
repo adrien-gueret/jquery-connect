@@ -1,8 +1,4 @@
-function getInitAction(renderFunction, mapStateToProps = null, store = null) {
-    if (!mapStateToProps) {
-        throw new Error('$.fn.connect: no mapStateToProps provided');
-    }
-
+function getInitAction(renderFunction, store, mapStateToProps = x => x) {
     if (!store) {
         throw new Error('$.fn.connect: no store provided');
     }
