@@ -4,9 +4,10 @@
   "description": "Easily connect your jQuery code to stores like Redux",
   "main": "./dist/jquery-connect.min.js",
   "scripts": {
-    "build": "yarn bundle && yarn minify",
+    "build": "yarn bundle && yarn minify && yarn iife",
     "bundle": "babel src --out-file ./dist/jquery-connect.js --presets=@babel/preset-env --source-type=script",
-    "minify": "uglifyjs ./dist/jquery-connect.js -c -m -o ./dist/jquery-connect.min.js"
+    "minify": "uglifyjs ./dist/jquery-connect.js -c -m -o ./dist/jquery-connect.min.js",
+    "iife": "wrap-in-iife -s ./dist -w -o"
   },
   "repository": {
     "type": "git",
@@ -27,7 +28,8 @@
     "@babel/cli": "^7.10.3",
     "@babel/core": "^7.10.3",
     "@babel/preset-env": "^7.10.3",
-    "uglify-js": "^3.10.0"
+    "uglify-js": "^3.10.0",
+    "wrap-in-iife": "^0.2.2"
   },
   "peerDependencies": {
     "jquery": "^1.7.0"
