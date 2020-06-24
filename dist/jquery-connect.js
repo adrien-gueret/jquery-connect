@@ -1,11 +1,8 @@
 (function() {
-function getInitAction(renderFunction) {
-  var mapStateToProps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-  var store = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-
-  if (!mapStateToProps) {
-    throw new Error('$.fn.connect: no mapStateToProps provided');
-  }
+function getInitAction(renderFunction, store) {
+  var mapStateToProps = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : function (x) {
+    return x;
+  };
 
   if (!store) {
     throw new Error('$.fn.connect: no store provided');
