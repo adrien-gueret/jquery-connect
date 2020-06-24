@@ -1,6 +1,4 @@
-import shallowEqual from '../utils/shallowEqual';
-
-export default function getInitAction(renderFunction, mapStateToProps = null, store = null) {
+function getInitAction(renderFunction, mapStateToProps = null, store = null) {
     if (!mapStateToProps) {
         throw new Error('$.fn.connect: no mapStateToProps provided');
     }

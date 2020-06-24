@@ -10,7 +10,7 @@ function is(x, y) {
   return x !== x && y !== y;
 }
 
-export default function shallowEqual(objA, objB) {
+function shallowEqual(objA, objB) {
   if (is(objA, objB)) {
     return true;
   }

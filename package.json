@@ -4,7 +4,9 @@
   "description": "Easily connect your jQuery code to stores like Redux",
   "main": "./dist/jquery-connect.min.js",
   "scripts": {
-    "build": "parcel build ./src/index.js --no-source-maps --out-file jquery-connect.min.js"
+    "build": "yarn bundle && yarn minify",
+    "bundle": "babel src --out-file ./dist/jquery-connect.js --presets=@babel/preset-env --source-type=script",
+    "minify": "uglifyjs ./dist/jquery-connect.js -c -m -o ./dist/jquery-connect.min.js"
   },
   "repository": {
     "type": "git",
@@ -22,12 +24,15 @@
   "homepage": "https://github.com/adrien-gueret/jquery-connect#readme",
   "sideEffects": true,
   "devDependencies": {
-    "parcel-bundler": "^1.12.4"
+    "@babel/cli": "^7.10.3",
+    "@babel/core": "^7.10.3",
+    "@babel/preset-env": "^7.10.3",
+    "uglify-js": "^3.10.0"
   },
   "peerDependencies": {
     "jquery": "^1.7.0"
   },
   "externals": {
-		"jquery": "jQuery"
-	}
+    "jquery": "jQuery"
+  }
 }

@@ -1,4 +1,4 @@
-export default function getRerenderAction() {
+function getRerenderAction() {
     const $ = window.jQuery;
     
     return function() {
