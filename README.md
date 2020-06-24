@@ -35,7 +35,7 @@ It supports jQuery v1.7.0 and higher.
 
 ### Basics
 
-_jquery-connect_ is a jQuery plugin: it provides a `connect` method to jQuery objects:
+_jquery-connect_ provides a `connect` method to jQuery objects:
 
 ```js
 $('#foo').connect(/* ... */);
@@ -67,7 +67,7 @@ The store is an object handling a part of your application state. The common way
 const myStore = Redux.createStore(/* ... */);
 ```
 
-Even it this plugin has been built with Redux in mind, **it is not required**. It will work as soon as the store you provide exposes these three methods:
+Even if this plugin has been built with Redux in mind, **it is not required**. It will work as soon as the store you provide exposes these three methods:
 
 - `subscribe(renderFunction)` 
 - `getState()` 
@@ -79,7 +79,7 @@ Even it this plugin has been built with Redux in mind, **it is not required**. I
 $(function() {
   // A function returning a static name
   function getName() {
-    return 'World'; // Try upating this value!
+    return 'World'; // Try updating this value!
   }
   
   // Create a Redux store from the above function
@@ -96,4 +96,4 @@ $(function() {
 
 ```
 
-https://codepen.io/adrien-gueret/pen/qBbjNLV
+[See on CodePen](https://codepen.io/adrien-gueret/pen/qBbjNLV)
