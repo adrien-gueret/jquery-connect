@@ -101,6 +101,28 @@ $('#foo').connect(myRenderFunction, myStore, function (state) {
 By doing that, the elements are connected only to the provided parts of the state. In the above example, it means that `myRenderFunction` will be called only if properties `foo` and `bar` are updated. If another value from the state is update, the element won't be re-rendered.  
 Please check [the corresponding example](#connect-elements-to-some-parts-of-the-store) to know more about this feature.
 
+#### Dispatch actions from rendering function
+
+Instead of calling directly `store.dispatch()` from the rendering function, it's better to use the mapper function to inject `dispatch`:
+
+```js
+// The mapper function receives dispatch function as second argument
+$('#foo').connect(myRenderFunction, myStore, function (state, dispatch) {
+  return {
+    foo: state.foo,
+    onSomeEvent: (bar) => dispatch({ type: 'whatever', payload: bar });
+  };
+});
+
+function myRenderFunction({ foo, onSomeEvent }) {
+  /* ... */
+  // Calling onSomeEvent('fraise'); will then dispatch action { type: 'whatever', payload: 'fraise' }
+  /* ... */
+}
+```
+
+By doing like this, you don't tie you rendering function to a specific store, meaning it'll be easier to reuse it if needed.
+
 ### Advanced
 
 #### Warnings with the rendering function
@@ -324,3 +346,54 @@ $(function() {
 ```
 
 [See full code on CodePen](https://codepen.io/adrien-gueret/pen/eYJRxqa)
+
+###  Calling an API
+
+Calling an external API from the rendering function should be done with `sideEffect`:
+
+```js
+$(function() {
+  /* ... */
+  
+  function renderGames({ search, onRequestEnd }) {
+    const $this = $(this);
+    
+    // Use sideEffect to be sure we try to call the API only when "search" is updated
+    $this.connect('sideEffect', function() {
+      if (!search) {
+        $this.html('<li>Please search for a game</li>');
+      } else {
+        getGames(search).then(function (games) {
+          // Call function received from props and send total of games
+          onRequestEnd(games.length);
+          
+          if (!games.length) {
+            $this.html('<li>No results found</li>');
+            return;
+          }
+
+          $this.html(games.map(function (game) {
+            return (
+              `<li class="game">
+                <img src="${game.image_url}" alt="" />
+                <b>${game.name}</b>
+              </li>`
+            );
+          }));
+        }); 
+      }
+      
+      // The returned function of sideEffect will be called before next render.
+      // In our case, it'll be just before performing another search.
+      // Try slower your Internet speed to see the loading after submiting the form!
+      return function () {
+        $this.html('<li>Loading...</li>');
+      };
+    }, search);
+  };
+  
+  /* ... */
+});
+```
+
+[See full code on CodePen](https://codepen.io/adrien-gueret/pen/MWKoxwd)
