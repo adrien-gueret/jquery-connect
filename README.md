@@ -1,11 +1,11 @@
 # jquery-connect
-Easily connect your jQuery code to stores like Redux.
+Easily connect your jQuery code to stores like Redux.  
 Flexible and very small.
 
 ## Installation
 
 ### In the browser
-The easiest way to use _jquery-connect_ is to include it with a [<script> tag](https://unpkg.com/jquery-connect):
+The easiest way to use _jquery-connect_ is to include it with a [`<script>` tag](https://unpkg.com/jquery-connect):
 
 ```html
 <script src="https://unpkg.com/jquery-connect"></script>
