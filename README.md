@@ -98,7 +98,80 @@ $('#foo').connect(myRenderFunction, myStore, function (state) {
 });
 ```
 
-By doing that, the elements are connected only to the provided parts of the state. In the above example, it means that `myRenderFunction` will be called only if properties `foo` and `bar` are updated. If another value from the state is update, the element won't be re-rendered.
+By doing that, the elements are connected only to the provided parts of the state. In the above example, it means that `myRenderFunction` will be called only if properties `foo` and `bar` are updated. If another value from the state is update, the element won't be re-rendered.  
+Please check [the corresponding example](#connect-elements-to-some-parts-of-the-store) to know more about this feature.
+
+### Advanced
+
+#### Warnings with the rendering function
+
+It's very important to understand that the rendering function will be triggered as it is on each render. It means that if we listen for some events in the rendering function, **these events will be listened one more time on each render**.  
+Basically, if we do that:
+
+```js
+// This is NOT ok!
+function myRenderFunction(value) {
+  $(this).click(function() { alert(value); });
+}
+```
+Each time the connected element will be rendered, a click listener will be attached: the `alert` will therefore be triggered too many times! [This example on CodePen](https://codepen.io/adrien-gueret/pen/PoZjXvP) illustrates the issue.
+
+The easiest solution to fix the problem is to simply remove the click listener before attaching a new one (like the second button in the example from the above link);
+
+```js
+// This is ok
+function myRenderFunction(value) {
+  $(this).off('click').click(function() { alert(value); });
+}
+```
+
+But sometimes, it could be trickier: maybe we want to define a `window.setInterval` or perform an API call. In that case, we may need to use `sideEffect`.
+
+#### Using `sideEffect`
+
+The `connect()` method can be called with `'sideEffect'` as first argument. In that case, its second argument must be a function:
+
+```js
+function renderingFunction() {
+  $(this).connect('sideEffect', function() { /* ... */ });
+}
+```
+
+This function will called in the same context than the rendering function, meaning that `this` still refers to the DOM element. 
+**But above all, this function will be run only once, during the first render**.
+
+```js
+function renderingFunction() {
+  $(this).connect('sideEffect', function() { alert('You will see me only once!'); });
+}
+```
+
+When calling `connect()` with `sideEffect`, it also possible to send a third argument: `dependencies`. It could be any primitive values or an array of values.  
+When providing dependencies, the `sideEffect` callback won't be called only once, but at each render **if and only if the dependencies have changed**:
+
+```js
+function renderingFunction({ foo, bar }) {
+  $(this).connect('sideEffect', function() {
+    console.log('Foo has changed! New value:', foo);
+  }, foo);
+}
+```
+
+If the `sideEffect` callback returns a function, **this function will be automatically called before next render**:
+
+```js
+function renderingFunction({ foo, bar }) {
+  $(this).connect('sideEffect', function() {
+    console.log('Foo has changed! New value:', foo);
+    
+    return function() {
+      console.log('Foo will change! Old value:', foo);
+    };
+  }, foo);
+}
+```
+
+**Please also note you can call `sideEffect` only from a rendering function**. It will throw if you try to call it outside.
 
 ## Examples
 
@@ -203,7 +276,7 @@ $(function() {
 
 ###  Connect elements to some parts of the store
 
-This example show how to provide a function as third parameter to connect elements to only parts of the store state:
+This example shows how to provide a function as third parameter to connect elements to only parts of the store state:
 
 ```js
 $(function() {
@@ -224,3 +297,32 @@ $(function() {
 ```
 
 [See full code on CodePen](https://codepen.io/adrien-gueret/pen/KKVqgNg)
+
+###  Using `sideEffect`
+
+This example shows how to use `sideEffect` to not execute some code on each render:
+
+```js
+$(function() {
+  /* ... */
+  
+  function renderSayHello4(value) {
+    // 
+    $(this).connect('sideEffect', function () {
+      const sayHello = getSayHello(value);
+      
+      $(this).click(sayHello);
+      
+      return function() {
+        $(this).off('click', sayHello);
+      };
+    }, value);
+  }
+  
+  /* ... */
+});
+```
+
+[See full code on CodePen](https://codepen.io/adrien-gueret/pen/PoZjXvP)
+
+
