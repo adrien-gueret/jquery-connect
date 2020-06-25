@@ -1,6 +1,6 @@
 {
   "name": "jquery-connect",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Easily connect your jQuery code to stores like Redux",
   "main": "./dist/jquery-connect.min.js",
   "scripts": {
