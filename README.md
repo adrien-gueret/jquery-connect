@@ -170,6 +170,7 @@ function renderingFunction({ foo, bar }) {
   }, foo);
 }
 ```
+[See full example on CodePen](https://codepen.io/adrien-gueret/pen/eYJRxqa)
 
 **Please also note you can call `sideEffect` only from a rendering function**. It will throw if you try to call it outside.
 
@@ -300,29 +301,26 @@ $(function() {
 
 ###  Using `sideEffect`
 
-This example shows how to use `sideEffect` to not execute some code on each render:
+This example shows how `sideEffect` works:
 
 ```js
 $(function() {
   /* ... */
   
-  function renderSayHello4(value) {
-    // 
-    $(this).connect('sideEffect', function () {
-      const sayHello = getSayHello(value);
-      
-      $(this).click(sayHello);
-      
-      return function() {
-        $(this).off('click', sayHello);
-      };
-    }, value);
+  function renderField(value) {
+    $(this)
+      .val(value)
+      .connect('sideEffect', function() {
+        console.log('Value has changed! New value:', value);
+    
+        return function() {
+          console.log('Value will change! Old value:', value);
+        };
+      }, value);
   }
   
   /* ... */
 });
 ```
 
-[See full code on CodePen](https://codepen.io/adrien-gueret/pen/PoZjXvP)
-
-
+[See full code on CodePen](https://codepen.io/adrien-gueret/pen/eYJRxqa)
