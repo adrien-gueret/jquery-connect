@@ -57,7 +57,7 @@ function myRenderFunction() {
 }
 ```
 
-`myRenderFunction` will be fired everytime _jquery-connect_ detects a change in the connected store.
+`myRenderFunction` will be fired at init and everytime _jquery-connect_ detects a change in the connected store.
 
 #### About the store
 
@@ -72,6 +72,33 @@ Even if this plugin has been built with Redux in mind, **it is not required**. I
 - `subscribe(renderFunction)` 
 - `getState()` 
 - `dispatch(action)` 
+
+#### What does "render" mean in _jquery-connect_?
+
+The rendering function you provide to `connect()` method will be fired **everytime** a render is required. Basically, "render" means "run the rendering function".
+
+A render is required at init and everytime _jquery-connect_ detects a change in the connected store.
+
+#### Connect an element to some parts of the store
+
+If your application is big, chances are it's the same for your stores.  
+First, remember you can use multiple stores, no needs to have only one. **Please only remember that elements can be connected to only one store**.
+
+Anyway, an element connected to a store will be rendered everytimes a change occurs in its connected store. If the rendering function uses only some values from the store and not all of them, it's a waste of resources to call it again.
+
+Here comes to play the mapper function. `connect()` method indeed accepts as third parameter a function. This function takes as argument the whole state of the connected store, and its returned value will be send to the rendering function:
+
+```js
+// myRenderFunction will only receive { foo, bar } as argument instead of the whole state
+$('#foo').connect(myRenderFunction, myStore, function (state) {
+  return {
+    foo: state.foo,
+    bar: state.bar,
+  };
+});
+```
+
+By doing that, the elements are connected only to the provided parts of the state. In the above example, it means that `myRenderFunction` will be called only if properties `foo` and `bar` are updated. If another value from the state is update, the element won't be re-rendered.
 
 ## Examples
 
@@ -174,7 +201,7 @@ $(function() {
 
 [See full code on CodePen](https://codepen.io/adrien-gueret/pen/zYrzKvE)
 
-### Using mapStateToProps
+###  Connect elements to some parts of the store
 
 This example show how to provide a function as third parameter to connect elements to only parts of the store state:
 
