@@ -2,6 +2,24 @@
 Easily connect your jQuery code to stores like Redux.  
 Flexible and very small.
 
+- [Installation](#installation)
+  - [In the browser](#in-the-browser)
+  - [Via npm](#via-npm)
+- [Usage](#usage)
+  - [About the rendering function](#about-the-rendering-function)
+  - [About the store](#about-the-store)
+  - [What does "render" mean in _jquery-connect_?](#what-does-render-mean-in-jquery-connect)
+  - [Connect an element to some parts of the store](#connect-an-element-to-some-parts-of-the-store)
+  - [Dispatch actions from rendering function](#dispatch-actions-from-rendering-function)
+  - [Warnings with the rendering function](#warnings-with-the-rendering-function)
+  - [Calling `connect()` with `sideEffect`](#calling-connect-with-sideeffect)
+- [Examples](#examples)
+  - [Hello World](#hello-world)
+  - [Connected form](#connected-form)
+  - [Connect mutliple elements to same store](#connect-mutliple-elements-to-same-store)
+  - [Using `sideEffect`](#using-sideeffect)
+  - [Calling an API](#calling-an-api)
+  
 ## Installation
 
 ### In the browser
@@ -33,8 +51,6 @@ It supports jQuery v1.7.0 and higher.
 
 ## Usage
 
-### Basics
-
 _jquery-connect_ provides a `connect` method to jQuery objects:
 
 ```js
@@ -47,7 +63,7 @@ With _jquery-connect_, you connect a jQuery object to a **render function** with
 $('#foo').connect(myRenderFunction, myStore);
 ```
 
-#### About the rendering function
+### About the rendering function
 
 `myRenderFunction` is a simple function you define. It's called in the context of the corresponding DOM element, so the keyword `this` refers to the element:
 
@@ -59,7 +75,7 @@ function myRenderFunction() {
 
 `myRenderFunction` will be fired at init and everytime _jquery-connect_ detects a change in the connected store.
 
-#### About the store
+### About the store
 
 The store is an object handling a part of your application state. The common way to use stores is via [Redux](https://redux.js.org/introduction/getting-started):
 
@@ -73,13 +89,13 @@ Even if this plugin has been built with Redux in mind, **it is not required**. I
 - `getState()` 
 - `dispatch(action)` 
 
-#### What does "render" mean in _jquery-connect_?
+### What does "render" mean in _jquery-connect_?
 
 The rendering function you provide to `connect()` method will be fired **everytime** a render is required. Basically, "render" means "run the rendering function".
 
 A render is required at init and everytime _jquery-connect_ detects a change in the connected store.
 
-#### Connect an element to some parts of the store
+### Connect an element to some parts of the store
 
 If your application is big, chances are it's the same for your stores.  
 First, remember you can use multiple stores, no needs to have only one. **Please only remember that elements can be connected to only one store**.
@@ -101,7 +117,7 @@ $('#foo').connect(myRenderFunction, myStore, function (state) {
 By doing that, the elements are connected only to the provided parts of the state. In the above example, it means that `myRenderFunction` will be called only if properties `foo` and `bar` are updated. If another value from the state is update, the element won't be re-rendered.  
 Please check [the corresponding example](#connect-elements-to-some-parts-of-the-store) to know more about this feature.
 
-#### Dispatch actions from rendering function
+### Dispatch actions from rendering function
 
 Instead of calling directly `store.dispatch()` from the rendering function, it's better to use the mapper function to inject `dispatch`:
 
@@ -123,9 +139,7 @@ function myRenderFunction({ foo, onSomeEvent }) {
 
 By doing like this, you don't tie you rendering function to a specific store, meaning it'll be easier to reuse it if needed.
 
-### Advanced
-
-#### Warnings with the rendering function
+### Warnings with the rendering function
 
 It's very important to understand that the rendering function will be triggered as it is on each render. It means that if we listen for some events in the rendering function, **these events will be listened one more time on each render**.  
 Basically, if we do that:
@@ -149,7 +163,7 @@ function myRenderFunction(value) {
 
 But sometimes, it could be trickier: maybe we want to define a `window.setInterval` or perform an API call. In that case, we may need to use `sideEffect`.
 
-#### Using `sideEffect`
+### Calling `connect()` with `sideEffect`
 
 The `connect()` method can be called with `'sideEffect'` as first argument. In that case, its second argument must be a function:
 
