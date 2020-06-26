@@ -16,7 +16,7 @@ Flexible and very small.
 - [Examples](#examples)
   - [Hello World](#hello-world)
   - [Connected form](#connected-form)
-  - [Connect mutliple elements to same store](#connect-mutliple-elements-to-same-store)
+  - [Connect multiple elements to same store](#connect-multiple-elements-to-same-store)
   - [Using `sideEffect`](#using-sideeffect)
   - [Calling an API](#calling-an-api)
   
@@ -281,7 +281,7 @@ $(function() {
 
 [Edit on CodePen](https://codepen.io/adrien-gueret/pen/JjGJKgM)
 
-### Connect mutliple elements to same store
+### Connect multiple elements to same store
 
 This example is the same than the previous one, except that it shows we can connect a store to multiple elements to make ou life easier:
 
