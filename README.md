@@ -29,7 +29,7 @@ The easiest way to use _jquery-connect_ is to include it with a [`<script>` tag]
 <script src="https://unpkg.com/jquery-connect"></script>
 ```
 
-This file is already compiled into ES5 and [will work in any modern browers](https://caniuse.com/#feat=es5).
+This file is already compiled into ES5 and [will work in any modern browsers](https://caniuse.com/#feat=es5).
 
 ### Via npm
 _jquery-connect_ is also avalaible through npm:
@@ -73,7 +73,7 @@ function myRenderFunction() {
 }
 ```
 
-`myRenderFunction` will be fired at init and everytime _jquery-connect_ detects a change in the connected store.
+`myRenderFunction` will be fired at init and every time _jquery-connect_ detects a change in the connected store.
 
 ### About the store
 
@@ -91,16 +91,16 @@ Even if this plugin has been built with Redux in mind, **it is not required**. I
 
 ### What does "render" mean in _jquery-connect_?
 
-The rendering function you provide to `connect()` method will be fired **everytime** a render is required. Basically, "render" means "run the rendering function".
+The rendering function you provide to `connect()` method will be fired **every time** a render is required. Basically, "render" means "run the rendering function".
 
-A render is required at init and everytime _jquery-connect_ detects a change in the connected store.
+A render is required at init and every time _jquery-connect_ detects a change in the connected store.
 
 ### Connect an element to some parts of the store
 
 If your application is big, chances are it's the same for your stores.  
 First, remember you can use multiple stores, no needs to have only one. **Please only remember that elements can be connected to only one store**.
 
-Anyway, an element connected to a store will be rendered everytimes a change occurs in its connected store. If the rendering function uses only some values from the store and not all of them, it's a waste of resources to call it again.
+Anyway, an element connected to a store will be rendered every time a change occurs in its connected store. If the rendering function uses only some values from the store and not all of them, it's a waste of resources to call it again.
 
 Here comes to play the mapper function. `connect()` method indeed accepts as third parameter a function. This function takes as argument the whole state of the connected store, and its returned value will be send to the rendering function:
 
@@ -137,7 +137,7 @@ function myRenderFunction({ foo, onSomeEvent }) {
 }
 ```
 
-By doing like this, you don't tie you rendering function to a specific store, meaning it'll be easier to reuse it if needed.
+By doing like this, you don't tie your rendering function to a specific store, meaning it'll be easier to reuse it if needed.
 
 ### Warnings with the rendering function
 
@@ -152,7 +152,7 @@ function myRenderFunction(value) {
 ```
 Each time the connected element will be rendered, a click listener will be attached: the `alert` will therefore be triggered too many times! [This example on CodePen](https://codepen.io/adrien-gueret/pen/PoZjXvP) illustrates the issue.
 
-The easiest solution to fix the problem is to simply remove the click listener before attaching a new one (like the second button in the example from the above link);
+The easiest solution to fix the problem is just to remove the click listener before attaching a new one (like the second button in the example from the above link):
 
 ```js
 // This is ok
@@ -283,7 +283,7 @@ $(function() {
 
 ### Connect mutliple elements to same store
 
-This example is the same than the previous one, except it shows we can connect a store to multiple elements to make ou life easier:
+This example is the same than the previous one, except that it shows we can connect a store to multiple elements to make ou life easier:
 
 ```js
 $(function() {
@@ -313,7 +313,7 @@ $(function() {
 
 ###  Connect elements to some parts of the store
 
-This example shows how to provide a function as third parameter to connect elements to only parts of the store state:
+This example shows how to provide a function as third parameter to connect elements to some parts of the store state:
 
 ```js
 $(function() {
