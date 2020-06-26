@@ -1,4 +1,9 @@
-# jquery-connect
+<p align="center">
+  <img src="https://raw.githubusercontent.com/adrien-gueret/jquery-connect/master/src/jquery-connect.png" alt="jquery-connect logo" width="150" />
+</p>
+
+<h1 align="center">jquery-connect</h1>
+
 Easily connect your jQuery code to stores like Redux.  
 Flexible and very small.
 
